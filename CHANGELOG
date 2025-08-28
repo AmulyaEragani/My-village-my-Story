@@ -1,0 +1,31 @@
+# 📦 CHANGELOG
+
+All notable changes to **My Village, My Story** will be documented in this file.
+
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)  
+and adheres to [Semantic Versioning](https://semver.org/).
+
+---
+
+## [Unreleased]
+
+- 🚧 Under active development
+- 🌐 Add multilingual input support
+- 📊 Admin dashboard to view all submitted stories
+- 📥 Export collected stories as JSON or CSV
+- 🔁 Auto-refresh feed for newly submitted stories
+
+---
+
+## [v1.0.0] – 2025-07-26
+
+### 🎉 Initial Release
+
+- 🚀 Project initialized for Summer of AI 2025
+- ✍️ Story submission form created using Streamlit
+- 💾 Stories stored directly into GitHub repo using GitHub token
+- 🔊 Fun sound effect (success.mp3) plays after successful submission
+- 🔥 Streak tracking feature implemented to boost engagement
+- 🎨 Clean and mobile-friendly UI designed for rural audiences
+- 🛡️ Licensed under GNU AGPLv3
+- 📁 Organized file structure:
