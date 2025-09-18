@@ -1,0 +1,205 @@
+# PowerShell script to scaffold the "My Village, My Story" React project structure
+# Creates pages, components, entities folders and starter files including Layout.js
+# Save this file and run: .\create_my_village_my_story_structure.ps1
+
+$root = Get-Location
+
+$structure = @(
+    "src/pages",
+    "src/pages/Home",
+    "src/pages/Share",
+    "src/pages/Stories",
+
+    "src/components/home",
+    "src/components/share",
+    "src/components/stories",
+
+    "src/entities"
+)
+
+# Create directories
+foreach ($dir in $structure) {
+    $full = Join-Path $root $dir
+    if (-not (Test-Path $full)) {
+        New-Item -Path $full -ItemType Directory -Force | Out-Null
+        Write-Host "Created directory: $dir"
+    } else {
+        Write-Host "Directory already exists: $dir"
+    }
+}
+
+# Helper function to write files with UTF8 encoding
+function Write-File($path, $content) {
+    $full = Join-Path $root $path
+    $dir = Split-Path $full -Parent
+    if (-not (Test-Path $dir)) { New-Item -Path $dir -ItemType Directory -Force | Out-Null }
+    $content | Out-File -FilePath $full -Encoding utf8 -Force
+    Write-Host "Created file: $path"
+}
+
+# Pages
+Write-File "src/pages/Home.js" @'
+import React from "react";
+import Layout from "../../Layout";
+
+export default function Home() {
+  return (
+    <Layout>
+      <h1>Home</h1>
+    </Layout>
+  );
+}
+'@
+
+Write-File "src/pages/Share.js" @'
+import React from "react";
+import Layout from "../../Layout";
+
+export default function Share() {
+  return (
+    <Layout>
+      <h1>Share</h1>
+    </Layout>
+  );
+}
+'@
+
+Write-File "src/pages/Stories.js" @'
+import React from "react";
+import Layout from "../../Layout";
+
+export default function Stories() {
+  return (
+    <Layout>
+      <h1>Stories</h1>
+    </Layout>
+  );
+}
+'@
+
+# Components - home
+Write-File "src/components/home/HeroSection.js" @'
+import React from "react";
+
+export default function HeroSection() {
+  return <section><h2>Hero Section</h2></section>;
+}
+'@
+
+Write-File "src/components/home/StoryCard.js" @'
+import React from "react";
+
+export default function StoryCard({ story }) {
+  return (
+    <article>
+      <h3>{story.title}</h3>
+      <p>{story.excerpt}</p>
+    </article>
+  );
+}
+'@
+
+Write-File "src/components/home/StatsSection.js" @'
+import React from "react";
+
+export default function StatsSection() {
+  return <section><h3>Stats</h3></section>;
+}
+'@
+
+Write-File "src/components/home/FeaturedVillages.js" @'
+import React from "react";
+
+export default function FeaturedVillages() {
+  return <section><h3>Featured Villages</h3></section>;
+}
+'@
+
+# Components - share
+Write-File "src/components/share/StoryTypeSelector.js" @'
+import React from "react";
+
+export default function StoryTypeSelector() {
+  return (
+    <div>
+      <label>Select story type</label>
+    </div>
+  );
+}
+'@
+
+Write-File "src/components/share/MediaUploader.js" @'
+import React from "react";
+
+export default function MediaUploader() {
+  return (
+    <div>
+      <label>Upload media</label>
+    </div>
+  );
+}
+'@
+
+Write-File "src/components/share/VoiceRecorder.js" @'
+import React from "react";
+
+export default function VoiceRecorder() {
+  return (
+    <div>
+      <label>Voice recorder</label>
+    </div>
+  );
+}
+'@
+
+# Components - stories
+Write-File "src/components/stories/StoryFilters.js" @'
+import React from "react";
+
+export default function StoryFilters() {
+  return (
+    <aside>
+      <h4>Filters</h4>
+    </aside>
+  );
+}
+'@
+
+# Entities
+Write-File "src/entities/Story.js" @'
+// Story entity (simple JS model)
+export default class Story {
+  constructor({ id, title, body, author, village, media = [], audio = null, createdAt = new Date() }) {
+    this.id = id;
+    this.title = title;
+    this.body = body;
+    this.author = author;
+    this.village = village;
+    this.media = media;
+    this.audio = audio;
+    this.createdAt = createdAt;
+  }
+}
+'@
+
+# Root Layout.js
+Write-File "Layout.js" @'
+import React from "react";
+
+export default function Layout({ children }) {
+  return (
+    <div>
+      <header>
+        <h1>My Village, My Story</h1>
+      </header>
+      <main>{children}</main>
+      <footer>
+        <p>© My Village, My Story</p>
+      </footer>
+    </div>
+  );
+}
+'@
+
+Write-Host "\nScaffolding complete. Review files under ./src" -ForegroundColor Green
+Write-Host "Run 'npm install' and start your React app (e.g., 'npm start' or 'pnpm dev') depending on your setup." -ForegroundColor Yellow
